@@ -1,0 +1,457 @@
+NAME : Yash Mali
+CLASS : B1
+ROLL NO : 91
+PRN NO : 202201040093
+QUESTIONS ON MATRIX
+
+1.	Given a matrix of size r*c. Traverse the matrix in spiral form.
+#include <iostream> using namespace std;
+
+void spiralTraversal(int matrix[][100], int m, int n) { int top = 0, bottom = m - 1, left = 0, right = n - 1;
+
+while (top <= bottom && left <= right) { for (int i = left; i <= right; ++i) {
+cout << matrix[top][i] << " ";
+}
+++top;
+
+for (int i = top; i <= bottom; ++i) { cout << matrix[i][right] << " ";
+}
+--right;
+
+if (top <= bottom) {
+for (int i = right; i >= left; --i) {
+cout << matrix[bottom][i] << " ";
+}
+--bottom;
+}
+
+if (left <= right) {
+ 
+for (int i = bottom; i >= top; --i) { cout << matrix[i][left] << " ";
+}
+++left;
+}
+}
+}
+
+int main() {
+int r, c;
+cout << "Enter the number of rows and columns: "; cin >> r >> c;
+
+int matrix[100][100];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < r; ++i) {
+for (int j = 0; j < c; ++j) { cin >> matrix[i][j];
+}
+}
+
+cout << "Spiral Traversal of Matrix:" << endl; spiralTraversal(matrix, r, c);
+
+return 0;
+}
+
+OUTPUT :
+ 
+ 
+
+
+2.	Find the sum and product of the given matrix elements.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+void sumAndProduct(int matrix[][MAX], int m, int n) { int sum = 0;
+int product = 1;
+
+for (int i = 0; i < m; ++i) { for (int j = 0; j < n; ++j) { sum += matrix[i][j];
+if (matrix[i][j] != 0) { product *= matrix[i][j];
+}
+}
+}
+
+cout << "Sum of Matrix Elements: " << sum << endl;
+cout << "Product of Matrix Elements: " << product << endl;
+}
+ 
+int main() {
+int r, c;
+cout << "Enter the number of rows and columns: "; cin >> r >> c;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < r; ++i) {
+for (int j = 0; j < c; ++j) { cin >> matrix[i][j];
+}
+}
+
+sumAndProduct(matrix, r, c);
+
+return 0;
+}
+
+OUTPUT :
+
+3.	Find Determinant of a given Matrix.
+#include <iostream>
+ 
+using namespace std;
+
+int determinantOfMatrix(int matrix[2][2]) {
+return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+}
+
+int main() {
+int matrix[2][2];
+
+cout << "Enter the 2x2 matrix elements:" << endl; for (int i = 0; i < 2; ++i) {
+for (int j = 0; j < 2; ++j) { cin >> matrix[i][j];
+}
+}
+
+int determinant = determinantOfMatrix(matrix);
+
+cout << "Determinant of the matrix: " << determinant << endl;
+
+return 0;
+}
+
+OUTPUT :
+ 
+4.	Given a two dimensional array, Write a program to print upper triangular matrix.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+void printUpperTriangularMatrix(int matrix[][MAX], int n) { for (int i = 0; i < n; ++i) {
+for (int j = i; j < n; ++j) { cout << matrix[i][j] << " ";
+}
+cout << endl;
+}
+}
+
+int main() {
+int n;
+cout << "Enter the size of the square matrix: "; cin >> n;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; ++i) {
+for (int j = i; j < n; ++j) { cin >> matrix[i][j];
+}
+}
+
+cout << "Upper Triangular Matrix:" << endl; printUpperTriangularMatrix(matrix, n);
+ 
+
+return 0;
+}
+
+OUTPUT :
+
+5.	Given a two dimensional array, Write a program to print lower triangular matrix.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+void printLowerTriangularMatrix(int matrix[][MAX], int n) { for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) { if (j <= i) {
+cout << matrix[i][j] << " ";
+} else {
+cout << "0 ";
+}
+}
+cout << endl;
+}
+ 
+}
+
+int main() {
+int n;
+cout << "Enter the size of the square matrix: "; cin >> n;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) { cin >> matrix[i][j];
+}
+}
+
+cout << "Lower Triangular Matrix:" << endl; printLowerTriangularMatrix(matrix, n);
+
+return 0;
+}
+
+OUTPUT :
+ 
+6.	Given an NxN matrix Mat. Sort all elements of the matrix.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+void flattenMatrix(int matrix[][MAX], int n, int flattened[]) { int index = 0;
+for (int i = 0; i < n; ++i) { for (int j = 0; j < n; ++j) {
+flattened[index++] = matrix[i][j];
+}
+}
+}
+
+void reshapeMatrix(int flattened[], int matrix[][MAX], int n) { int index = 0;
+for (int i = 0; i < n; ++i) { for (int j = 0; j < n; ++j) {
+matrix[i][j] = flattened[index++];
+}
+}
+}
+
+void selectionSort(int arr[], int n) { for (int i = 0; i < n - 1; ++i) { int minIndex = i;
+for (int j = i + 1; j < n; ++j) { if (arr[j] < arr[minIndex]) {
+minIndex = j;
+}
+}
+ 
+if (minIndex != i) { swap(arr[i], arr[minIndex]);
+}
+}
+}
+
+int main() {
+int n;
+cout << "Enter the size of the square matrix (N): "; cin >> n;
+
+int matrix[MAX][MAX]; int flattened[MAX * MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) { cin >> matrix[i][j];
+}
+}
+
+flattenMatrix(matrix, n, flattened); selectionSort(flattened, n * n); reshapeMatrix(flattened, matrix, n);
+
+cout << "Sorted Matrix:" << endl; for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) { cout << matrix[i][j] << " ";
+}
+cout << endl;
+}
+ 
+
+return 0;
+}
+OUTPUT :
+
+
+
+7.	Take a matrix and check if it is invertible. An invertible matrix is a square matrix whose determinant exists.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+// Function to calculate the determinant of an NxN matrix int determinant(int matrix[][MAX], int n) {
+int det = 0;
+ 
+
+if (n == 2) {
+det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+} else if (n == 3) {
+det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
+matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+}
+
+return det;
+}
+
+// Function to check if the matrix is invertible
+bool isMatrixInvertible(int matrix[][MAX], int n) { int det = determinant(matrix, n);
+return det != 0;
+}
+
+int main() {
+int n;
+cout << "Enter the size of the square matrix (N): "; cin >> n;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) { cin >> matrix[i][j];
+ 
+}
+}
+bool invertible = isMatrixInvertible(matrix, n); if (invertible) {
+cout << "The matrix is invertible." << endl;
+} else {
+cout << "The matrix is not invertible." << endl;
+}
+
+return 0;
+}
+OUTPUT :
+
+
+
+
+
+8.	Given an m x n matrix, find all common elements present in all rows in O(mn) time and one traversal of matrix.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+ 
+// Function to check if an element is present in an array bool contains(int arr[], int size, int element) {
+for (int i = 0; i < size; ++i) { if (arr[i] == element) { return true;
+}
+}
+return false;
+}
+
+int main() {
+int m, n;
+cout << "Enter the number of rows (m) and columns (n): "; cin >> m >> n;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < m; ++i) {
+for (int j = 0; j < n; ++j) { cin >> matrix[i][j];
+}
+}
+
+int commonElements[MAX]; // Array to store common elements int commonCount = 0; // Count of common elements
+
+// Initialize the commonElements array with elements from the first row for (int j = 0; j < n; ++j) {
+commonElements[commonCount++] = matrix[0][j];
+}
+ 
+// Iterate through the remaining rows for (int i = 1; i < m; ++i) {
+int currentRowElements[MAX]; int currentCount = 0;
+
+// Find common elements in the current row for (int j = 0; j < n; ++j) {
+if (contains(commonElements, commonCount, matrix[i][j])) { currentRowElements[currentCount++] = matrix[i][j];
+}
+}
+
+// Update the common elements array with the current row's common elements
+commonCount = currentCount;
+for (int j = 0; j < currentCount; ++j) { commonElements[j] = currentRowElements[j];
+}
+}
+
+cout << "Common elements in all rows:" << endl; for (int i = 0; i < commonCount; ++i) {
+cout << commonElements[i] << " ";
+}
+cout << endl;
+
+return 0;
+}
+OUTPUT :
+ 
+ 
+
+
+9.	Find LU Decomposition of a given matrix. The LU in LU Decomposition of a matrix stands for Lower Upper. #include <iostream>
+using namespace std; const int MAX = 100;
+void luDecomposition(double matrix[][MAX], int n) {
+double lower[MAX][MAX] = {0}; // Initialize lower triangular matrix double upper[MAX][MAX] = {0}; // Initialize upper triangular matrix
+
+// Perform LU decomposition for (int i = 0; i < n; i++) {
+// Upper triangular matrix for (int k = i; k < n; k++) { double sum = 0;
+for (int j = 0; j < i; j++) {
+sum += (lower[i][j] * upper[j][k]);
+}
+upper[i][k] = matrix[i][k] - sum;
+}
+
+// Lower triangular matrix
+ 
+for (int k = i; k < n; k++) { if (i == k) {
+lower[i][i] = 1; // Diagonal elements of L are 1
+} else {
+double sum = 0;
+for (int j = 0; j < i; j++) {
+sum += (lower[k][j] * upper[j][i]);
+}
+lower[k][i] = (matrix[k][i] - sum) / upper[i][i];
+}
+}
+}
+
+// Print lower triangular matrix
+cout << "Lower Triangular Matrix (L):" << endl; for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { cout << lower[i][j] << " ";
+}
+cout << endl;
+}
+
+// Print upper triangular matrix
+cout << "Upper Triangular Matrix (U):" << endl; for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { cout << upper[i][j] << " ";
+}
+cout << endl;
+}
+}
+ 
+int main() {
+int n;
+cout << "Enter the size of the square matrix (N): "; cin >> n;
+
+double matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { cin >> matrix[i][j];
+}
+}
+
+luDecomposition(matrix, n);
+
+return 0;
+}
+OUTPUT :
+
+
+ 
+10.	Given a square matrix, turn it by 90 degrees in a clockwise direction without using any extra space.
+#include <iostream> using namespace std;
+
+const int MAX = 100;
+
+void rotateMatrixClockwise(int matrix[][MAX], int n) {
+// Transpose the matrix for (int i = 0; i < n; i++) { for (int j = i; j < n; j++) {
+swap(matrix[i][j], matrix[j][i]);
+}
+}
+
+// Reverse each row to rotate clockwise for (int i = 0; i < n; i++) {
+int left = 0, right = n - 1; while (left < right) {
+swap(matrix[i][left], matrix[i][right]); left++;
+right--;
+}
+}
+}
+
+void printMatrix(int matrix[][MAX], int n) { for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { cout << matrix[i][j] << " ";
+}
+cout << endl;
+ 
+}
+}
+
+int main() {
+int n;
+cout << "Enter the size of the square matrix (N): "; cin >> n;
+
+int matrix[MAX][MAX];
+
+cout << "Enter the matrix elements:" << endl; for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { cin >> matrix[i][j];
+}
+}
+
+cout << "Original Matrix:" << endl; printMatrix(matrix, n);
+
+rotateMatrixClockwise(matrix, n);
+
+cout << "Matrix Rotated Clockwise by 90 Degrees:" << endl; printMatrix(matrix, n);
+
+return 0;
+}
+
+OUTPUT :
+ 
+ 
