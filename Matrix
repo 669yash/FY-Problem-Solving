@@ -1,0 +1,273 @@
+Name: Yash Mali
+ Division: (B1) MSID: 91
+PRN: 202201040093
+ARRAYS
+
+1.	Reverse the array.
+
+
+
+
+
+
+2.	Find the maximum and minimum element in an array.
+ 
+
+ 
+
+
+
+
+
+3.	Find largest sum contiguous subarray.
+
+ 
+ 
+
+
+
+
+
+4.	Minimize the maximum difference between heights.
+
+#include <iostream> #include <algorithm> using namespace std;
+
+int minimizeMaxDiff(int arr[], int n, int k) { sort(arr, arr + n);
+
+int left = 0;	// The minimum possible maximum difference
+int right = arr[n - 1] - arr[0]; // The maximum possible maximum difference
+
+while (left < right) {
+int mid = left + (right - left) / 2; int count = 0;
+int curr_height = arr[0];
+
+for (int i = 1; i < n; i++) {
+if (arr[i] - curr_height >= mid) {
+ 
+curr_height = arr[i]; count++;
+}
+}
+
+if (count >= k - 1) {
+left = mid + 1; // Increase the minimum possible maximum difference
+} else {
+right = mid;	// Decrease the maximum possible maximum difference
+}
+}
+
+return left - 1; // Subtract 1 to get the minimized maximum difference
+}
+
+int main() {
+int arr[] = {1, 3, 6, 19, 23};
+int n = sizeof(arr) / sizeof(arr[0]);
+int k = 3; // Number of towers to be placed
+
+int minMaxDiff = minimizeMaxDiff(arr, n, k);
+cout << "The minimized maximum difference between heights is: " << minMaxDiff << endl;
+
+return 0;
+}
+
+
+
+
+
+5.	Kadane’s Algo.
+
+#include <iostream> #include <climits> using namespace std;
+
+int kadanesAlgorithm(int arr[], int size) { int maxEndingHere = arr[0];
+int maxSoFar = arr[0];
+ 
+for (int i = 1; i < size; i++) {
+maxEndingHere = max(arr[i], maxEndingHere + arr[i]); maxSoFar = max(maxSoFar, maxEndingHere);
+}
+
+return maxSoFar;
+}
+
+int main() {
+int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+int size = sizeof(arr) / sizeof(arr[0]);
+
+int maxSum = kadanesAlgorithm(arr, size);
+cout << "The maximum sum of a subarray is: " << maxSum << endl;
+
+return 0;
+}
+
+
+
+
+
+
+6.	Find maximum product subarray.
+
+
+#include <iostream> using namespace std;
+
+int maxProductSubarray(int arr[], int n) { if (n == 0) {
+return 0;
+}
+
+int maxEndingHere = arr[0]; int minEndingHere = arr[0]; int maxProduct = arr[0];
+
+for (int i = 1; i < n; i++) {
+// Swap maxEndingHere and minEndingHere if arr[i] is negative if (arr[i] < 0) {
+ 
+swap(maxEndingHere, minEndingHere);
+}
+
+// Update maxEndingHere and minEndingHere for the current element maxEndingHere = max(arr[i], maxEndingHere * arr[i]); minEndingHere = min(arr[i], minEndingHere * arr[i]);
+
+// Update maxProduct if a larger product is found maxProduct = max(maxProduct, maxEndingHere);
+}
+
+return maxProduct;
+}
+
+int main() {
+int arr[] = {2, 3, -2, 4};
+int n = sizeof(arr) / sizeof(arr[0]);
+
+int maxProd = maxProductSubarray(arr, n);
+cout << "Maximum product of a subarray is: " << maxProd << endl;
+
+return 0;
+}
+
+
+
+
+
+7.	Move all the negative elements to one side of the array.
+
+#include <iostream> using namespace std;
+
+void moveNegatives(int arr[], int n) {
+int left = 0; // Initialize a pointer for the left side
+int right = n - 1; // Initialize a pointer for the right side
+
+while (left <= right) {
+if (arr[left] < 0 && arr[right] < 0) {
+// Both elements are negative, move the left pointer to the right left++;
+ 
+} else if (arr[left] >= 0 && arr[right] < 0) {
+// Left element is positive, right element is negative, swap them swap(arr[left], arr[right]);
+left++; right--;
+} else if (arr[left] >= 0 && arr[right] >= 0) {
+// Both elements are positive, move the right pointer to the left right--;
+} else {
+// Left element is negative, right element is positive, swap them swap(arr[left], arr[right]);
+left++; right--;
+}
+}
+}
+
+int main() {
+int arr[] = {-12, 11, -13, -5, 6, -7, 5, -3, -6};
+int n = sizeof(arr) / sizeof(arr[0]);
+
+cout << "Original Array: "; for (int i = 0; i < n; i++) {
+cout << arr[i] << " ";
+}
+cout << endl; moveNegatives(arr, n);
+cout << "Array after moving negatives to one side: "; for (int i = 0; i < n; i++) {
+cout << arr[i] << " ";
+}
+cout << endl;
+
+return 0;
+}
+
+
+
+ 
+8.	Find the triplet that sum to a given value.
+
+
+
+#include <iostream> #include <vector> #include <algorithm> using namespace std;
+
+void findTripletsWithSum(int arr[], int n, int targetSum) {
+// Sort the array sort(arr, arr + n);
+
+for (int i = 0; i < n - 2; i++) {
+int left = i + 1;	// Pointer for the left element int right = n - 1;		// Pointer for the right element
+
+while (left < right) {
+int currentSum = arr[i] + arr[left] + arr[right];
+
+if (currentSum == targetSum) {
+cout << "Triplet: " << arr[i] << ", " << arr[left] << ", " << arr[right] << endl; left++;
+right--;
+} else if (currentSum < targetSum) { left++;
+} else {
+right--;
+}
+}
+}
+}
+
+int main() {
+int arr[] = {12, 3, 6, 1, 6, 9};
+int n = sizeof(arr) / sizeof(arr[0]); int targetSum = 24;
+
+cout << "Triplets with sum " << targetSum << " are:" << endl; findTripletsWithSum(arr, n, targetSum);
+ 
+
+return 0;
+}
+
+
+
+
+
+9.	Find factorial of a large number.
+
+ 
+ 
+
+
+
+
+
+
+10.	Merge two sorted arrays without using extra space.
+
+
+#include <iostream> using namespace std;
+ 
+void mergeArrays(int arr1[], int m, int arr2[], int n) { int i = m - 1; // Index for the last element of arr1 int j = n - 1; // Index for the last element of arr2
+int mergedIndex = m + n - 1; // Index for the last element of merged array
+
+while (i >= 0 && j >= 0) { if (arr1[i] >= arr2[j]) {
+arr1[mergedIndex] = arr1[i]; i--;
+} else {
+arr1[mergedIndex] = arr2[j]; j--;
+}
+mergedIndex--;
+}
+
+// If there are remaining elements in arr2, copy them to arr1 while (j >= 0) {
+arr1[mergedIndex] = arr2[j]; j--;
+mergedIndex--;
+}
+}
+
+int main() {
+int arr1[6] = {1, 3, 5, 0, 0, 0};
+int m = 3;
+int arr2[3] = {2, 4, 6}; int n = 3;
+mergeArrays(arr1, m, arr2, n); cout << "Merged Array: ";
+for (int i = 0; i < m + n; i++) {
+cout << arr1[i] << " ";
+}
+cout << endl;
+
+return 0;
+}
+ 
+
+ 
